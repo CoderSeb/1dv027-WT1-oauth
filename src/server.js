@@ -1,5 +1,18 @@
+import express from 'express'
+import morgan from 'morgan'
+
 const main = async () => {
-  console.log('seems to work')
+  const port = process.env.PORT || 5000
+  const server = express()
+  server.use(morgan('dev'))
+
+  server.get('/', (req, res) => {
+    res.send('Seems to work...')
+  })
+
+  server.listen(port, () => {
+    console.info(`Server running at http://localhost:${port}`)
+  })
 }
 
 try {
