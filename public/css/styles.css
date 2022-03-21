@@ -1,0 +1,46 @@
+html, body {
+  background-color: #081b3fde;
+  height:100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  height: 56px;
+}
+
+main {
+  height: 100%;
+  background-color: #081b3fde;
+  padding: 2rem;
+  color: #cdd6ff;
+  text-align: center;
+}
+
+footer {
+  height: 70px;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #cdd6ff;
+  text-align: center;
+}
+
+.oauth-header {
+  padding: .5em;
+}
+
+.oauth-link {
+  font-size: 1.4em;
+  font-weight: bold;
+  transition: ease-in-out 0.2;
+}
+
+.oauth-link:hover {
+  text-decoration: none;
+}
+
+.oauth-link:active {
+  font-size: 1.3em;
+}
