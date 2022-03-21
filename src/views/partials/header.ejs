@@ -4,8 +4,15 @@
     <li class="nav-item">
       <a class="nav-link" href="/">Home</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/activity">Activity</a>
-    </li>
+
+    <% if (viewData.name) { %>
+      <li class="nav-item">
+        <a class="nav-link" href="/activity">Activity</a>
+      </li>
+    <% } %>
+    
   </ul>
+  <% if (viewData.name) { %>
+  <p>Signed in as, <%= viewData.name %></p>
+  <% } %>
 </nav>

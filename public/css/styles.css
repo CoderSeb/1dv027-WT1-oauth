@@ -6,7 +6,12 @@ html, body {
 }
 
 header {
-  height: 56px;
+  overflow: hidden;
+}
+
+nav > p {
+  background: white;
+  color: black;
 }
 
 main {

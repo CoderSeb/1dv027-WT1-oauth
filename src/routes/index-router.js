@@ -1,13 +1,18 @@
 import express from 'express'
+import AuthController from '../controllers/auth-controller.js'
+import IndexController from '../controllers/index-controller.js'
 
 export const router = express.Router()
 
+const authController = new AuthController()
+const indexController = new IndexController()
+
 router.get('/activity', (req, res, next) => {
-  res.render('pages/activity')
+  const viewData = {
+  }
+  res.render('pages/activity', { viewData })
 })
 
-router.get('/', (req, res, next) => {
-  res.render('pages/welcome')
-})
+router.get('/', indexController.showWelcome)
 
-
+router.get('/api/oauth/gitlab', authController.handleRedirect)
