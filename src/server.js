@@ -20,7 +20,7 @@ const main = async () => {
 
   server.use(express.urlencoded({ extended: false }))
 
-  server.get('/', router)
+  server.use('/', router)
 
   server.listen(port, () => {
     console.info(`Server running at http://localhost:${port}`)
