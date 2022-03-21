@@ -3,6 +3,7 @@ import expressLayouts from 'express-ejs-layouts'
 import morgan from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { router } from './routes/index-router.js'
 const main = async () => {
   const port = process.env.PORT || 5000
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
@@ -19,9 +20,7 @@ const main = async () => {
 
   server.use(express.urlencoded({ extended: false }))
 
-  server.get('/', (req, res) => {
-    res.render('layouts/default')
-  })
+  server.get('/', router)
 
   server.listen(port, () => {
     console.info(`Server running at http://localhost:${port}`)
