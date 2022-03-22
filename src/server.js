@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { router } from './routes/index-router.js'
+
 const main = async () => {
   const port = process.env.PORT || 5000
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
@@ -29,8 +30,7 @@ const main = async () => {
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      maxAge: (60 * 1000 * 60 * 2), // 2 hours
-      sameSite: 'lax'
+      maxAge: (60 * 1000 * 60 * 2) // 2 hours
     }
   }))
 
