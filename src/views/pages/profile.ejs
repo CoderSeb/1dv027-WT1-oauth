@@ -1,6 +1,13 @@
 <div>
   <h2>Profile page</h2>
   <% if (viewData.name) { %>
-    <p>Signed in as, <%= viewData.name %></p>
+    <div class="card oauth-card bg-dark text-left">
+      <img src="<%= viewData.avatar %>" alt="">
+      <h4><%= viewData.name %></h4>
+      <p class="text-left">Gitlab id: <%= viewData.id %></p>
+      <p>Gitlab username: <%= viewData.username %></p>
+      <p>Email: <%= viewData.email %></p>
+      <p>Last activity on: <%= viewData.lao %></p>
+    </div>
     <% } %>
 </div>

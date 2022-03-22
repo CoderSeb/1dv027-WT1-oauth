@@ -2,6 +2,7 @@
 export default class AuthController {
   async showProfile(req, res, next) {
     const viewData = req.session.user
+    console.log(viewData)
     res.render('pages/profile', { viewData })
   }
 
