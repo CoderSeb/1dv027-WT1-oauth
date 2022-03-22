@@ -12,8 +12,10 @@ export async function handleGitlabCallback(req, res, next) {
 
   const qs = new URLSearchParams(params)
   const response = await axios.post(`${process.env.GITLAB_OAUTH_TOKEN_URL}`, qs.toString())
+
   req.session.creds = {
     access_token: response.data.access_token,
+    token_type: response.data.token_type,
     refresh_token: response.data.refresh_token
   }
 
