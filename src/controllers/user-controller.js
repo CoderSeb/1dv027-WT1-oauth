@@ -3,7 +3,9 @@ import axios from 'axios'
 
 export default class UserController {
   async showProfile(req, res, next) {
-    const viewData = req.session.user
+    const viewData = {
+      user: req.session.user
+    } 
     res.render('pages/profile', { viewData })
   }
 
@@ -15,9 +17,17 @@ export default class UserController {
         'Authorization': `${req.session.creds.token_type} ${req.session.creds.access_token}`
       }
     }
-    const url = `https://gitlab.lnu.se/api/v4/users/${req.session.user.id}/events?sort&per_page=100`
-    const response = await axios.get(url, options)
-    viewData.events = response.data.map(event => {
+    let allEvents = []
+    let perPage = 20
+    for (let i = 1; i <= 6; i++) {
+      if (i === 6) {
+        perPage = 1
+      }
+      const url = `https://gitlab.lnu.se/api/v4/users/${req.session.user.id}/events?sort&per_page=${perPage}&page=${i}`
+      const response = await axios.get(url, options)
+      allEvents.push(...response.data)
+    }
+    viewData.events = allEvents.map(event => {
       return {
         id: event.id,
         name: event.action_name,
@@ -26,6 +36,8 @@ export default class UserController {
         target_type: event.target_type || event.push_data?.ref_type
       }
     })
+
+    viewData.user = req.session.user
 
     res.render('pages/activities', { viewData })
   }

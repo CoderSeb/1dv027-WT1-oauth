@@ -1,13 +1,13 @@
 <div>
   <h2>Profile page</h2>
-  <% if (viewData.name) { %>
+  <% if (viewData.user) { %>
     <div class="card oauth-card bg-dark text-left">
-      <img src="<%= viewData.avatar %>" alt="">
-      <h4><%= viewData.name %></h4>
-      <p class="text-left">Gitlab id: <%= viewData.id %></p>
-      <p>Gitlab username: <%= viewData.username %></p>
-      <p>Email: <%= viewData.email %></p>
-      <p>Last activity on: <%= viewData.lao %></p>
+      <img src="<%= viewData.user.avatar %>" alt="">
+      <h4><%= viewData.user.name %></h4>
+      <p class="text-left">Gitlab id: <%= viewData.user.id %></p>
+      <p>Gitlab username: <%= viewData.user.username %></p>
+      <p>Email: <%= viewData.user.email %></p>
+      <p>Last activity on: <%= viewData.user.lao %></p>
     </div>
     <% } %>
 </div>

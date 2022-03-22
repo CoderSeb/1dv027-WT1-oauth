@@ -27,12 +27,8 @@ footer {
   text-align: center;
 }
 
-tbody {
-  overflow-y: hidden;
-}
-
 .table-responsive {
-  height: 70vh;
+  height: 75vh;
 }
 
 .oauth-header {
