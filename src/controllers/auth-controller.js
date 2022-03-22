@@ -13,4 +13,13 @@ export default class AuthController {
       res.redirect('/')
     })
   }
+
+  async redirectProfile(req, res, next) {
+    res.redirect('/profile')
+  }
+
+  async showActivities(req, res, next) {
+    const viewData = req.session.user
+    res.render('pages/activities', { viewData })
+  }
 }

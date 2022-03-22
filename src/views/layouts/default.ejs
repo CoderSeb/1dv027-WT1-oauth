@@ -10,6 +10,9 @@
 
 <header>
   <%- include('../partials/header') %>
+  <% if (viewData.name) { %>
+    <p class="name-tag">Signed in as, <%= viewData.name %></p>
+    <% } %>
 </header>
 
 <main>

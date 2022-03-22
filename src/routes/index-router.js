@@ -8,10 +8,7 @@ export const router = express.Router()
 const authController = new AuthController()
 const indexController = new IndexController()
 
-router.get('/activities', (req, res, next) => {
-  const viewData = {}
-  res.render('pages/activities', { viewData })
-})
+router.get('/activities', checkSession, authController.showActivities)
 
 router.get('/profile', checkSession, authController.showProfile)
 
@@ -25,4 +22,4 @@ router.get(
   '/api/oauth/gitlab',
   handleGitlabCallback,
   getGitlabInformation,
-  authController.showProfile)
+  authController.redirectProfile)

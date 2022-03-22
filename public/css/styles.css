@@ -6,12 +6,7 @@ html, body {
 }
 
 header {
-  overflow: hidden;
-}
-
-nav > p {
-  background: white;
-  color: black;
+  background-color: #081b3fde;
 }
 
 main {
@@ -48,4 +43,10 @@ footer {
 
 .oauth-link:active {
   font-size: 1.3em;
+}
+
+.name-tag {
+  float:right;
+  color: #cdd6ff;
+  padding: .5em;
 }
