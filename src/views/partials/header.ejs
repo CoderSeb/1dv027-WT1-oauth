@@ -7,12 +7,17 @@
 
     <% if (viewData.name) { %>
       <li class="nav-item">
-        <a class="nav-link" href="/activity">Activity</a>
+        <a class="nav-link" href="/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/activities">Activities</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
       </li>
     <% } %>
-    
   </ul>
   <% if (viewData.name) { %>
-  <p>Signed in as, <%= viewData.name %></p>
+  <p class="text-right">Signed in as, <%= viewData.name %></p>
   <% } %>
 </nav>
