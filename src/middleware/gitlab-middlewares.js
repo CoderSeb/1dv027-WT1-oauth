@@ -12,9 +12,24 @@ export async function handleGitlabCallback(req, res, next) {
 
   const qs = new URLSearchParams(params)
   const response = await axios.post(`${process.env.GITLAB_OAUTH_TOKEN_URL}`, qs.toString())
-  req.user = {
-    access_token: response.data.access_token
+  req.session.creds = {
+    access_token: response.data.access_token,
+    refresh_token: response.data.refresh_token
   }
 
+  next()
+}
+
+export async function getGitlabInformation(req, res, next) {
+  const url = `https://gitlab.lnu.se/api/v4/user?access_token=${req.session.creds.access_token}`
+  const response = await axios.get(url)
+  req.session.user = {
+    id: response.data.id,
+    name: response.data.name,
+    username: response.data.username,
+    avatar: response.data.avatar_url,
+    lao: response.data.last_activity_on,
+    email: response.data.email
+  }
   next()
 }

@@ -2,6 +2,10 @@
   <h2>Welcome to OAuth Mayhem</h2>
   <p>See your 101 latest activities on gitlab!</p>
   <div class="container">
- <a href="<%= viewData.gitlab_query %>" class="link-light oauth-link">Login with Gitlab</a>
+    <% if (viewData.name) { %>
+      <h3>You are signed in as <%= viewData.name %></h3>
+    <% } else { %>
+      <a href="<%= viewData.gitlab_query %>" class="link-light oauth-link">Login with Gitlab</a>
+    <% } %>
   </div>
 </div>

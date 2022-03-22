@@ -1,5 +1,6 @@
 import express from 'express'
 import expressLayouts from 'express-ejs-layouts'
+import session from 'express-session'
 import morgan from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -19,6 +20,17 @@ const main = async () => {
   server.use(express.static(join(directoryFullName, '..', 'public')))
 
   server.use(express.urlencoded({ extended: false }))
+
+  server.use(session({
+    name: process.env.SESSION_NAME,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+      secure: true,
+      maxAge: (60 * 1000 * 60 * 2) // 2 hours
+    }
+  }))
 
   server.use('/', router)
 
