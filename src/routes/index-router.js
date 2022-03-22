@@ -2,7 +2,7 @@ import express from 'express'
 import AuthController from '../controllers/auth-controller.js'
 import IndexController from '../controllers/index-controller.js'
 import { checkSession } from '../middleware/auth-middleware.js'
-import { getGitlabInformation, handleGitlabCallback } from '../middleware/gitlab-middlewares.js'
+import { getGitlabInformation, handleGitlabCallback, revokeTokens } from '../middleware/gitlab-middlewares.js'
 export const router = express.Router()
 
 const authController = new AuthController()
@@ -12,7 +12,7 @@ router.get('/activities', checkSession, authController.showActivities)
 
 router.get('/profile', checkSession, authController.showProfile)
 
-router.get('/logout', checkSession, authController.logout)
+router.get('/logout', checkSession, revokeTokens, authController.logout)
 
 router.get('/', indexController.showWelcome)
 
