@@ -27,6 +27,14 @@ footer {
   text-align: center;
 }
 
+tbody {
+  overflow-y: hidden;
+}
+
+.table-responsive {
+  height: 70vh;
+}
+
 .oauth-header {
   padding: .5em;
 }

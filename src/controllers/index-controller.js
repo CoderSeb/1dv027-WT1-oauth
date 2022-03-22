@@ -11,8 +11,7 @@ export default class IndexController {
         response_type: 'code',
         scope: [
           'read_api',
-          'read_user',
-          'profile'
+          'read_user'
         ].join(' ')
       }
       const qs = new URLSearchParams(options)
