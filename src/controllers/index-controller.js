@@ -3,9 +3,7 @@ export default class IndexController {
   async showWelcome(req, res, next) {
     let viewData = {}
     if (req.session.user) {
-      viewData = req.session.user
-      console.log(viewData)
-      return res.render('pages/welcome', { viewData })
+      res.redirect('/user/profile')
     } else {
       const options = {
         client_id: process.env.GITLAB_APPLICATION_ID_DEV,
@@ -13,6 +11,7 @@ export default class IndexController {
         response_type: 'code',
         scope: [
           'read_api',
+          'read_user',
           'profile'
         ].join(' ')
       }
