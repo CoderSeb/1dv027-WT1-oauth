@@ -2,6 +2,7 @@
 export default class IndexController {
   async showWelcome(req, res, next) {
     let viewData = {}
+    console.log(req.session)
     if (req.session.user) {
       viewData = req.session.user
       console.log(viewData)

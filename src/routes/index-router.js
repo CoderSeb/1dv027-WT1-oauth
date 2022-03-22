@@ -15,7 +15,11 @@ router.get('/activities', (req, res, next) => {
 
 router.get('/profile', checkSession, authController.showProfile)
 
+router.get('/logout', checkSession, authController.logout)
+
 router.get('/', indexController.showWelcome)
+
+
 
 router.get(
   '/api/oauth/gitlab',

@@ -4,4 +4,13 @@ export default class AuthController {
     const viewData = req.session.user
     res.render('pages/profile', { viewData })
   }
+
+  async logout(req, res, next) {
+    req.session.destroy((err) => {
+      if (err) {
+        console.log(err)
+      }
+      res.redirect('/')
+    })
+  }
 }
