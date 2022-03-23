@@ -12,8 +12,8 @@ export async function handleGitlabCallback (req, res, next) {
   try {
     const returnedCode = req.query.code
     const params = {
-      client_id: process.env.GITLAB_APPLICATION_ID_DEV,
-      client_secret: process.env.GITLAB_APPLICATION_SECRET_DEV,
+      client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
+      client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
       redirect_uri: process.env.GITLAB_CALLBACK_URL_DEV,
       code: returnedCode,
       grant_type: 'authorization_code'
@@ -46,8 +46,8 @@ export async function handleGitlabCallback (req, res, next) {
 export async function revokeTokens (req, res, next) {
   try {
     const params = {
-      client_id: process.env.GITLAB_APPLICATION_ID_DEV,
-      client_secret: process.env.GITLAB_APPLICATION_SECRET_DEV,
+      client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
+      client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
       token: req.session.creds.access_token
     }
     const qs = new URLSearchParams(params)

@@ -17,8 +17,8 @@ export default class IndexController {
         res.redirect('/user/profile')
       } else {
         const options = {
-          client_id: process.env.GITLAB_APPLICATION_ID_DEV,
-          redirect_uri: process.env.GITLAB_CALLBACK_URL_DEV,
+          client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
+          redirect_uri: process.env.GITLAB_OAUTH_CALLBACK_URL,
           response_type: 'code',
           scope: ['read_api', 'read_user'].join(' ')
         }
