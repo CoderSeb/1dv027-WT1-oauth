@@ -14,7 +14,7 @@ export async function handleGitlabCallback (req, res, next) {
     const params = {
       client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
       client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
-      redirect_uri: process.env.GITLAB_CALLBACK_URL_DEV,
+      redirect_uri: process.env.GITLAB_OAUTH_CALLBACK_URL,
       code: returnedCode,
       grant_type: 'authorization_code'
     }
@@ -31,6 +31,7 @@ export async function handleGitlabCallback (req, res, next) {
       refresh_token: response.data.refresh_token
     }
   } catch (err) {
+    if (err.status) next(err)
     next(createError(400, err.message))
   }
   next()
