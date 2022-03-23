@@ -1,5 +1,6 @@
 import axios from 'axios'
 import createError from 'http-errors'
+import { genJwt, validateJwt } from '../helpers/jwt-helpers.js'
 
 /**
  * Function to handle Gitlab Oauth callback.
@@ -10,6 +11,7 @@ import createError from 'http-errors'
  */
 export async function handleGitlabCallback (req, res, next) {
   try {
+    validateJwt(req.query.state)
     const returnedCode = req.query.code
     const params = {
       client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
@@ -102,13 +104,14 @@ export async function getGitlabInformation (req, res, next) {
  * @param {object} res Express response object
  * @param {Function} next Express next function
  */
-export async function generateGitlabUrl(req, res, next) {
+export async function generateGitlabUrl (req, res, next) {
   try {
     const options = {
       client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
       redirect_uri: process.env.GITLAB_OAUTH_CALLBACK_URL,
       response_type: 'code',
-      scope: ['read_api', 'read_user'].join(' ')
+      scope: ['read_api', 'read_user'].join(' '),
+      state: genJwt()
     }
     const qs = new URLSearchParams(options)
     const url = `${process.env.GITLAB_OAUTH_URL}${qs.toString()}`

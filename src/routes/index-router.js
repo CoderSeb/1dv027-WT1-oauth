@@ -6,7 +6,6 @@ import { checkSession } from '../middleware/oauth-middlewares.js'
 import { router as oauthRouter } from './oauth-router.js'
 import { router as userRouter } from './user-router.js'
 
-
 export const router = express.Router()
 
 const indexController = new IndexController()
