@@ -17,3 +17,4 @@ export async function checkSession (req, res, next) {
   }
   next()
 }
+

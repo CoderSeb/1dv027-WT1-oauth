@@ -94,3 +94,28 @@ export async function getGitlabInformation (req, res, next) {
   }
   next()
 }
+
+/**
+ * Sets gitlab oauth url to session.gitlabUrl.
+ *
+ * @param {object} req  Express request object
+ * @param {object} res Express response object
+ * @param {Function} next Express next function
+ */
+export async function generateGitlabUrl(req, res, next) {
+  try {
+    const options = {
+      client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
+      redirect_uri: process.env.GITLAB_OAUTH_CALLBACK_URL,
+      response_type: 'code',
+      scope: ['read_api', 'read_user'].join(' ')
+    }
+    const qs = new URLSearchParams(options)
+    const url = `${process.env.GITLAB_OAUTH_URL}${qs.toString()}`
+    req.session.gitlabUrl = url
+  } catch (err) {
+    if (err.status) next(err)
+    next(createError(500, err.message))
+  }
+  next()
+}
