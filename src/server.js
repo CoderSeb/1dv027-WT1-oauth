@@ -7,6 +7,9 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { router } from './routes/index-router.js'
 
+/**
+ * Entry point of the application.
+ */
 const main = async () => {
   const port = process.env.PORT || 5000
   const directoryFullName = dirname(fileURLToPath(import.meta.url))

@@ -7,11 +7,13 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon -r dotenv/config src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.lnu.se:1dv027/student/sa224ny/assignment---wt1---oauth.git"
+    "url": "git@gitlab.lnu.se:1dv027/student/sa224ny/assignment-wt1-oauth.git"
   },
   "author": "Sebastian Åkerblom <sa224ny@student.lnu.se>",
   "license": "ISC",
@@ -27,7 +29,11 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@lnu/eslint-config": "^1.1.4",
     "dotenv": "^16.0.0",
     "nodemon": "^2.0.15"
+  },
+  "eslintConfig": {
+    "extends": "@lnu"
   }
 }

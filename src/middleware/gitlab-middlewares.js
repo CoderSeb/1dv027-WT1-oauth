@@ -1,6 +1,14 @@
 import axios from 'axios'
 import createError from 'http-errors'
-export async function handleGitlabCallback(req, res, next) {
+
+/**
+ * Function to handle Gitlab Oauth callback.
+ *
+ * @param {object} req  Express request object
+ * @param {object} res Express response object
+ * @param {Function} next Express next function
+ */
+export async function handleGitlabCallback (req, res, next) {
   try {
     const returnedCode = req.query.code
     const params = {
@@ -12,7 +20,10 @@ export async function handleGitlabCallback(req, res, next) {
     }
 
     const qs = new URLSearchParams(params)
-    const response = await axios.post(`${process.env.GITLAB_OAUTH_TOKEN_URL}`, qs.toString())
+    const response = await axios.post(
+      `${process.env.GITLAB_OAUTH_TOKEN_URL}`,
+      qs.toString()
+    )
 
     req.session.creds = {
       access_token: response.data.access_token,
@@ -25,41 +36,58 @@ export async function handleGitlabCallback(req, res, next) {
   next()
 }
 
-export async function revokeTokens(req, res, next) {
+/**
+ * Revokes Gitlab access_token.
+ *
+ * @param {object} req  Express request object
+ * @param {object} res Express response object
+ * @param {Function} next Express next function
+ */
+export async function revokeTokens (req, res, next) {
   try {
     const params = {
       client_id: process.env.GITLAB_APPLICATION_ID_DEV,
       client_secret: process.env.GITLAB_APPLICATION_SECRET_DEV,
-      token: req.session.creds.access_token,
+      token: req.session.creds.access_token
     }
     const qs = new URLSearchParams(params)
-    const response = await axios.post(`${process.env.GITLAB_OAUTH_REVOKE_URL}`, qs.toString())
+    const response = await axios.post(
+      `${process.env.GITLAB_OAUTH_REVOKE_URL}`,
+      qs.toString()
+    )
     if (response.status !== 200) {
       throw createError(500, "Token couldn't be revoked")
     }
-  } catch(err) {
+  } catch (err) {
     if (err.status) next(err)
     next(createError(500, err.message))
   }
   next()
 }
 
-export async function getGitlabInformation(req, res, next) {
+/**
+ * Retrieves Gitlab user information and saves to session.
+ *
+ * @param {object} req  Express request object
+ * @param {object} res Express response object
+ * @param {Function} next Express next function
+ */
+export async function getGitlabInformation (req, res, next) {
   try {
     const url = `https://gitlab.lnu.se/api/v4/user?access_token=${req.session.creds.access_token}`
-  const response = await axios.get(url)
-  if (response.status !== 200) {
-    throw createError(500, "Token couldn't be revoked")
-  }
-  req.session.user = {
-    id: response.data.id,
-    name: response.data.name,
-    username: response.data.username,
-    avatar: response.data.avatar_url,
-    lao: response.data.last_activity_on,
-    email: response.data.email
-  }
-  } catch(err) {
+    const response = await axios.get(url)
+    if (response.status !== 200) {
+      throw createError(500, "Token couldn't be revoked")
+    }
+    req.session.user = {
+      id: response.data.id,
+      name: response.data.name,
+      username: response.data.username,
+      avatar: response.data.avatar_url,
+      lao: response.data.last_activity_on,
+      email: response.data.email
+    }
+  } catch (err) {
     if (err.status) next(err)
     next(createError(500, err.message))
   }
