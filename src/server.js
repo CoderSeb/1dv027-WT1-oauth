@@ -37,6 +37,7 @@ const main = async () => {
 
   server.use(express.urlencoded({ extended: false }))
 
+  const nodeEnv = process.env.NODE_ENV
   server.set('trust proxy', 1)
   server.use(session({
     name: process.env.SESSION_NAME,
@@ -44,8 +45,10 @@ const main = async () => {
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true,
-      maxAge: (60 * 1000 * 60 * 2) // 2 hours
+      httpOnly: nodeEnv === 'development',
+      secure: nodeEnv !== 'development',
+      maxAge: (60 * 60 * 1000 * 2),
+      sameSite: 'Lax'
     }
   }))
 

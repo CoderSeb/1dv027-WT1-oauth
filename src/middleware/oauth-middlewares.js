@@ -9,10 +9,16 @@ import createError from 'http-errors'
  */
 export async function checkSession (req, res, next) {
   try {
-    if (!req.session.user) {
-      return res.redirect('/')
+    if (!req.session.creds) {
+      throw createError(403)
+    }
+    const expires = req.session.creds.created_at + req.session.creds.expires_in
+
+    if (expires - (Math.floor(Date.now() / 1000)) < 0 && req.path !== '/logout') {
+      return res.redirect('/api/oauth/refresh')
     }
   } catch (err) {
+    if (err.status) next(err)
     next(createError(400, err.message))
   }
   next()
