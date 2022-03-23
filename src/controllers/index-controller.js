@@ -1,7 +1,8 @@
-
+import createError from 'http-errors'
 export default class IndexController {
   async showWelcome(req, res, next) {
-    let viewData = {}
+    try {
+      let viewData = {}
     if (req.session.user) {
       res.redirect('/user/profile')
     } else {
@@ -20,6 +21,9 @@ export default class IndexController {
         gitlab_query: url
       }
       return res.render('pages/welcome', { viewData })
+    }
+    } catch (err) {
+      next(createError(500, err.message))
     }
   }
 }

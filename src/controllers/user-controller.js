@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import createError from 'http-errors'
 
 export default class UserController {
   async showProfile(req, res, next) {
@@ -10,7 +10,8 @@ export default class UserController {
   }
 
   async showActivities(req, res, next) {
-    let viewData = {}
+    try {
+      let viewData = {}
     viewData.user = req.session.user
     const options = {
       headers: {
@@ -25,6 +26,9 @@ export default class UserController {
       }
       const url = `https://gitlab.lnu.se/api/v4/users/${req.session.user.id}/events?sort&per_page=${perPage}&page=${i}`
       const response = await axios.get(url, options)
+      if (response.status !== 200) {
+        throw createError(400, "Couldn't fetch activities from Gitlab")
+      }
       allEvents.push(...response.data)
     }
     viewData.events = allEvents.map(event => {
@@ -37,8 +41,10 @@ export default class UserController {
       }
     })
 
-    viewData.user = req.session.user
-
     res.render('pages/activities', { viewData })
+    } catch (err) {
+      if (err.status) next(err)
+      next(createError(500, err.message))
+    }
   }
 }

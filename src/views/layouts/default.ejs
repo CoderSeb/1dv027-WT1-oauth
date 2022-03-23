@@ -11,8 +11,8 @@
 
 <header>
   <%- include('../partials/header') %>
-  <% if (viewData.name) { %>
-    <p class="name-tag">Signed in as, <%= viewData.name %></p>
+  <% if (viewData.user) { %>
+    <p class="name-tag">Signed in as, <%= viewData.user.name %></p>
     <% } %>
 </header>
 

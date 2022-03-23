@@ -36,6 +36,16 @@ const main = async () => {
 
   server.use('/', router)
 
+  server.use((err, req, res, next) => {
+    const viewData = {
+      err: {
+        status: err.status || 500,
+        message: err.message
+      }
+    }
+    res.render('errors/error', { viewData })
+  })
+
   server.listen(port, () => {
     console.info(`Server running at http://localhost:${port}`)
   })
