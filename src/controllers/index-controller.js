@@ -16,16 +16,8 @@ export default class IndexController {
       if (req.session.user) {
         res.redirect('/user/profile')
       } else {
-        const options = {
-          client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
-          redirect_uri: process.env.GITLAB_OAUTH_CALLBACK_URL,
-          response_type: 'code',
-          scope: ['read_api', 'read_user'].join(' ')
-        }
-        const qs = new URLSearchParams(options)
-        const url = `${process.env.GITLAB_OAUTH_URL}${qs.toString()}`
         viewData = {
-          gitlab_query: url
+          gitlab_query: req.session.gitlabUrl
         }
         return res.render('pages/welcome', { viewData })
       }
