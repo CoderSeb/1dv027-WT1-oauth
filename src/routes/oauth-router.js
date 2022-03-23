@@ -14,3 +14,5 @@ router.get(
   getGitlabInformation,
   authController.redirectProfile
 )
+
+router.get('/refresh', authController.refreshToken)

@@ -27,11 +27,7 @@ export async function handleGitlabCallback (req, res, next) {
       qs.toString()
     )
 
-    req.session.creds = {
-      access_token: response.data.access_token,
-      token_type: response.data.token_type,
-      refresh_token: response.data.refresh_token
-    }
+    req.session.creds = response.data
   } catch (err) {
     if (err.status) next(err)
     next(createError(400, err.message))
