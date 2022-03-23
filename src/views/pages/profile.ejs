@@ -2,7 +2,7 @@
   <h2>Profile page</h2>
   <% if (viewData.user) { %>
     <div class="card oauth-card bg-dark text-left">
-      <img src="<%= viewData.user.avatar %>" alt="">
+      <img src="<%= viewData.user.avatar %>" alt="" crossorigin>
       <h4><%= viewData.user.name %></h4>
       <p class="text-left">Gitlab id: <%= viewData.user.id %></p>
       <p>Gitlab username: <%= viewData.user.username %></p>

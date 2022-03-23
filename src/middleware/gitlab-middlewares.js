@@ -34,7 +34,6 @@ export async function revokeTokens(req, res, next) {
     }
     const qs = new URLSearchParams(params)
     const response = await axios.post(`${process.env.GITLAB_OAUTH_REVOKE_URL}`, qs.toString())
-    console.log(response.status)
     if (response.status !== 200) {
       throw createError(500, "Token couldn't be revoked")
     }

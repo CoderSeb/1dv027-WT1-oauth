@@ -1,6 +1,7 @@
 import express from 'express'
 import expressLayouts from 'express-ejs-layouts'
 import session from 'express-session'
+import helmet from 'helmet'
 import morgan from 'morgan'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -13,6 +14,17 @@ const main = async () => {
   const server = express()
 
   server.use(morgan('dev'))
+
+  server.use(helmet())
+  server.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
+  server.use(helmet({ crossOriginEmbedderPolicy: true }))
+  server.use(helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'", 'cdn.jsdelivr.net'],
+      scriptSrc: ["'self'", 'gitlab.lnu.se', 'cdn.jsdelivr.net'],
+      imgSrc: ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
+    }
+  }))
 
   server.set('view engine', 'ejs')
   server.set('views', join(directoryFullName, 'views'))

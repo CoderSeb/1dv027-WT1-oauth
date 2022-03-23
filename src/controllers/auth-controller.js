@@ -11,7 +11,6 @@ export default class AuthController {
     try {
       req.session.destroy((err) => {
         if (err) {
-          console.log(err)
           throw createError(500, err.message)
         }
         res.redirect('/')
