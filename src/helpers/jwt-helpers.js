@@ -1,8 +1,11 @@
 import createError from 'http-errors'
 import jwt from 'jsonwebtoken'
+
 /**
+ * Creates and returns a JWT.
  *
- * @param data
+ * @param {object} data as optional jwt payload.
+ * @returns {string} as the JWT.
  */
 export const genJwt = (data) => {
   const token = jwt.sign({
@@ -12,12 +15,13 @@ export const genJwt = (data) => {
 }
 
 /**
+ * Validates the token, if any error throws a 401 http error.
  *
- * @param token
+ * @param {string} token as the token.
  */
 export const validateJwt = (token) => {
   try {
-    const payload = jwt.verify(token, process.env.TOKEN_SECRET)
+    jwt.verify(token, process.env.TOKEN_SECRET)
   } catch (err) {
     throw createError(401, 'JWT have been tampered with!')
   }
