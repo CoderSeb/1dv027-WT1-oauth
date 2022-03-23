@@ -11,7 +11,7 @@ import { router } from './routes/index-router.js'
  * Entry point of the application.
  */
 const main = async () => {
-  const port = process.env.PORT || 5000
+  const port = process.env.PORT
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
 
   const server = express()
