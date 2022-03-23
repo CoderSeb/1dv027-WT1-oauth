@@ -11,7 +11,7 @@ import { router } from './routes/index-router.js'
  * Entry point of the application.
  */
 const main = async () => {
-  const port = process.env.PORT
+  const port = process.env.PORT || 5000
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
 
   const server = express()
@@ -48,7 +48,8 @@ const main = async () => {
     cookie: {
       httpOnly: nodeEnv === 'development',
       secure: nodeEnv !== 'development',
-      maxAge: (60 * 60 * 1000 * 2)
+      maxAge: (60 * 60 * 1000 * 2),
+      sameSite: 'Lax'
     }
   }))
 
