@@ -55,7 +55,6 @@ export default class AuthController {
         qs.toString()
       )
       req.session.creds = response.data
-      console.log('refreshed!')
       res.redirect('/user/profile')
     } catch (err) {
       if (err.status) next(err)
