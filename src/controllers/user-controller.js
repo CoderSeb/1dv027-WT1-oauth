@@ -30,7 +30,7 @@ export default class UserController {
     try {
       const viewData = {}
       viewData.user = req.session.user
-      const options = {
+      let options = {
         headers: {
           Authorization: `${req.session.creds.token_type} ${req.session.creds.access_token}`
         }
@@ -38,12 +38,15 @@ export default class UserController {
       const allEvents = []
       const perPage = 20
       for (let i = 1; i <= 6; i++) {
-        const url = `https://gitlab.lnu.se/api/v4/users/${req.session.user.id}/events?sort&per_page=${perPage}&page=${i}`
+        options.params = {
+          per_page: perPage,
+          page: i
+        }
+        const url = `https://gitlab.lnu.se/api/v4/users/${req.session.user.id}/events`
         const response = await axios.get(url, options)
         if (response.status !== 200) {
           throw createError(400, "Couldn't fetch activities from Gitlab")
         }
-
         i === 6
           ? allEvents.push(response.data[0])
           : allEvents.push(...response.data)

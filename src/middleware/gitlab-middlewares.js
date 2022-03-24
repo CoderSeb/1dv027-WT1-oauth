@@ -1,6 +1,6 @@
 import axios from 'axios'
 import createError from 'http-errors'
-import { genJwt, validateJwt } from '../helpers/jwt-helpers.js'
+import { nanoid } from 'nanoid'
 
 /**
  * Function to handle Gitlab Oauth callback.
@@ -11,7 +11,10 @@ import { genJwt, validateJwt } from '../helpers/jwt-helpers.js'
  */
 export async function handleGitlabCallback (req, res, next) {
   try {
-    validateJwt(req.query.state)
+    if (req.query.state !== req.session.state) {
+      throw createError(401)
+    }
+    req.session.state = ''
     const returnedCode = req.query.code
     const params = {
       client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
@@ -30,7 +33,7 @@ export async function handleGitlabCallback (req, res, next) {
     req.session.creds = response.data
   } catch (err) {
     if (err.status) next(err)
-    next(createError(400, err.message))
+    next(createError(500, err.message))
   }
   next()
 }
@@ -76,7 +79,7 @@ export async function getGitlabInformation (req, res, next) {
     const url = `https://gitlab.lnu.se/api/v4/user?access_token=${req.session.creds.access_token}`
     const response = await axios.get(url)
     if (response.status !== 200) {
-      throw createError(500, "Token couldn't be revoked")
+      throw createError(401)
     }
     req.session.user = {
       id: response.data.id,
@@ -102,12 +105,14 @@ export async function getGitlabInformation (req, res, next) {
  */
 export async function generateGitlabUrl (req, res, next) {
   try {
+    req.session.state = await nanoid()
+
     const options = {
       client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
       redirect_uri: process.env.GITLAB_OAUTH_CALLBACK_URL,
       response_type: 'code',
       scope: ['read_api', 'read_user'].join(' '),
-      state: genJwt()
+      state: req.session.state
     }
     const qs = new URLSearchParams(options)
     const url = `${process.env.GITLAB_OAUTH_URL}${qs.toString()}`
