@@ -36,8 +36,11 @@ export default class UserController {
         }
       }
       const allEvents = []
-      const perPage = 20
-      for (let i = 1; i <= 6; i++) {
+      let maxEvents = 101 // The amount of events to get.
+      const perPage = 25 // 1 - 100.
+      let maxPages = Math.ceil(maxEvents / perPage)
+      const lastPageEvents = maxEvents % perPage
+      for (let i = 1; i <= maxPages; i++) {
         options.params = {
           per_page: perPage,
           page: i
@@ -47,8 +50,12 @@ export default class UserController {
         if (response.status !== 200) {
           throw createError(400, "Couldn't fetch activities from Gitlab")
         }
-        i === 6
-          ? allEvents.push(response.data[0])
+        if (response.headers['x-total-pages'] < maxPages) {
+          maxPages = Number(response.headers['x-total-pages'])
+          maxEvents = Number(response.headers['x-total'])
+        }
+        i === maxPages
+          ? allEvents.push(...response.data.slice(0, lastPageEvents))
           : allEvents.push(...response.data)
       }
       viewData.events = allEvents.map((event) => {
