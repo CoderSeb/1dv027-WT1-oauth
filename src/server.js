@@ -45,7 +45,7 @@ const main = async () => {
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: nodeEnv === 'development',
+      httpOnly: true,
       secure: nodeEnv !== 'development',
       maxAge: (60 * 60 * 1000 * 2),
       sameSite: 'Lax'
