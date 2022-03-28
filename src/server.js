@@ -17,18 +17,19 @@ const main = async () => {
   const server = express()
 
   server.use(morgan('dev'))
-
-  server.use(helmet())
-  server.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
-  server.use(helmet({ crossOriginEmbedderPolicy: true }))
-  server.use(helmet.contentSecurityPolicy({
+  server.use(helmet({
+    contentSecurityPolicy: {
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      'script-src': ["'self'", 'gitlab.lnu.se', 'cdn.jsdelivr.net', '*'],
-      'img-src': ["'self'", 'gitlab.lnu.se', '*.gravatar.com'],
-      'connect-src': ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
+      'default-src': ["'self'"],
+      'script-src': ["'self'", 'gitlab.lnu.se', 'cdn.jsdelivr.net', '*.gravatar.com'],
+      'img-src': ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
     }
-  }))
+  },
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginEmbedderPolicy: false
+}))
+
 
   server.set('view engine', 'ejs')
   server.set('views', join(directoryFullName, 'views'))
