@@ -23,8 +23,10 @@ const main = async () => {
   server.use(helmet({ crossOriginEmbedderPolicy: true }))
   server.use(helmet.contentSecurityPolicy({
     directives: {
-      scriptSrc: ["'self'", 'gitlab.lnu.se', 'cdn.jsdelivr.net'],
-      imgSrc: ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      'script-src': ["'self'", 'gitlab.lnu.se', 'cdn.jsdelivr.net', '*'],
+      'img-src': ["'self'", 'gitlab.lnu.se', '*.gravatar.com'],
+      'connect-src': ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
     }
   }))
 
