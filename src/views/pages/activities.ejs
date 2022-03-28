@@ -16,8 +16,8 @@
       <tbody>
         <% for (let i = 0; i < viewData.events.length; i++) { %>
         <tr>
-          <th scope="row"><%= i + 1 %></th>
-          <th><%= viewData.events[i].name %></th>
+          <td scope="row"><%= i + 1 %></td>
+          <td><%= viewData.events[i].name %></td>
           <td><%= viewData.events[i].created_at %></td>
           <td><%= viewData.events[i].target_title %></td>
           <td><%= viewData.events[i].target_type %></td>

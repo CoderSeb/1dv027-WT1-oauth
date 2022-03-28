@@ -1,6 +1,9 @@
 html, body {
-  background-color: #081b3fde;
-  height:100vh;
+  height:100%;
+  background-color: black;
+}
+
+body {
   display: flex;
   flex-direction: column;
 }
@@ -10,25 +13,21 @@ header {
 }
 
 main {
-  height: 100%;
+  flex: 1 auto;
   background-color: #081b3fde;
+  min-height: 100% - 70px;
   padding: 2rem;
   color: #cdd6ff;
   text-align: center;
 }
 
 footer {
+  flex-shrink: 0;
   height: 70px;
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #cdd6ff;
+  background-color: #081b3fde;
   text-align: center;
-}
-
-.table-responsive {
-  height: 80vh;
+  color: #cdd6ff;
+  line-height: 50px;
 }
 
 .oauth-header {
@@ -89,4 +88,20 @@ footer {
   left: 0;
   right: 0;
   margin: auto;
+}
+
+.table-responsive {
+  overflow:auto;
+  height: 80vh;
+}
+
+.table-responsive, thead, th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
 }
