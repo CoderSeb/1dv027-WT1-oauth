@@ -1,10 +1,15 @@
 import axios from 'axios'
 import createError from 'http-errors'
 
-
+/**
+ * Helper function to fetch activities from gitlab.
+ *
+ * @param {string} auth As the access token string.
+ * @param {number} userId As the user id.
+ */
 export const getActivities = async (auth, userId) => {
   try {
-    let options = {
+    const options = {
       headers: {
         Authorization: auth
       }
@@ -48,5 +53,4 @@ export const getActivities = async (auth, userId) => {
     }
     throw createError(500, 'Issues fetching activities.')
   }
-  
 }
