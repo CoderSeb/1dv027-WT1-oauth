@@ -17,16 +17,25 @@ const main = async () => {
   const server = express()
 
   server.use(morgan('dev'))
-
-  server.use(helmet())
-  server.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }))
-  server.use(helmet({ crossOriginEmbedderPolicy: true }))
-  server.use(helmet.contentSecurityPolicy({
-    directives: {
-      scriptSrc: ["'self'", 'gitlab.lnu.se', 'cdn.jsdelivr.net'],
-      imgSrc: ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
-    }
-  }))
+  server.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+          'default-src': ["'self'"],
+          'script-src': [
+            "'self'",
+            'gitlab.lnu.se',
+            'cdn.jsdelivr.net',
+            '*.gravatar.com'
+          ],
+          'img-src': ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
+        }
+      },
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+      crossOriginEmbedderPolicy: false
+    })
+  )
 
   server.set('view engine', 'ejs')
   server.set('views', join(directoryFullName, 'views'))
@@ -38,18 +47,20 @@ const main = async () => {
 
   const nodeEnv = process.env.NODE_ENV
   server.set('trust proxy', 1)
-  server.use(session({
-    name: process.env.SESSION_NAME,
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: nodeEnv !== 'development',
-      maxAge: (60 * 60 * 1000 * 2),
-      sameSite: 'Lax'
-    }
-  }))
+  server.use(
+    session({
+      name: process.env.SESSION_NAME,
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: nodeEnv !== 'development',
+        maxAge: 60 * 60 * 1000 * 2,
+        sameSite: 'Lax'
+      }
+    })
+  )
 
   server.use('/', router)
 

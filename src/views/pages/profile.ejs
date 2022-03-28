@@ -1,7 +1,7 @@
 <div>
   <% if (viewData.user) { %>
   <div class="card oauth-card bg-dark text-left">
-    <img src="<%= viewData.user.avatar %>" alt="" crossorigin />
+    <img src="<%= viewData.user.avatar %>" alt="" />
     <h4><%= viewData.user.name %></h4>
     <p class="text-left">Gitlab id: <%= viewData.user.id %></p>
     <p>Gitlab username: <%= viewData.user.username %></p>
