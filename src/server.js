@@ -25,9 +25,7 @@ const main = async () => {
           'default-src': ["'self'"],
           'script-src': [
             "'self'",
-            'gitlab.lnu.se',
-            'cdn.jsdelivr.net',
-            '*.gravatar.com'
+            'cdn.jsdelivr.net'
           ],
           'img-src': ["'self'", 'gitlab.lnu.se', '*.gravatar.com']
         }
