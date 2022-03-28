@@ -38,7 +38,6 @@ footer {
 .oauth-link {
   font-size: 1.4em;
   font-weight: bold;
-  transition: ease-in-out 0.2;
 }
 
 .oauth-link:hover {
