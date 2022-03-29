@@ -8,7 +8,7 @@ import createError from 'http-errors'
  */
 export default class AuthController {
   /**
-   * Destroys session and browser cookie.
+   * Destroys session and browser cookie, also revokes access token.
    *
    * @param {object} req  Express request object
    * @param {object} res Express response object
@@ -16,14 +16,17 @@ export default class AuthController {
    */
   async logout (req, res, next) {
     try {
-      const response = await axios.post(process.env.GITLAB_OAUTH_REVOKE_URL, {
+      const params = {
         client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
         client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
         token: req.session.creds.access_token
-      })
-      if (response.status !== 200) {
-        throw createError(500, 'Failed to revoke token')
       }
+
+      const qs = new URLSearchParams(params)
+      await axios.post(
+        process.env.GITLAB_OAUTH_REVOKE_URL,
+        qs.toString()
+      )
       req.session.destroy((err) => {
         if (err) {
           throw createError(500, err.message)
