@@ -16,6 +16,14 @@ export default class AuthController {
    */
   async logout (req, res, next) {
     try {
+      const response = await axios.post(process.env.GITLAB_OAUTH_REVOKE_URL, {
+        client_id: process.env.GITLAB_OAUTH_CLIENT_ID,
+        client_secret: process.env.GITLAB_OAUTH_CLIENT_SECRET,
+        token: req.session.creds.access_token
+      })
+      if (response.status !== 200) {
+        throw createError(500, 'Failed to revoke token')
+      }
       req.session.destroy((err) => {
         if (err) {
           throw createError(500, err.message)
