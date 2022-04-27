@@ -1,0 +1,29 @@
+<div class="activity-container">
+  <div class="table-responsive">
+    <table class="table table-dark table-striped caption-top">
+      <caption>
+        Your activity
+      </caption>
+      <thead class="sticky-header">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Action name</th>
+          <th scope="col">Created</th>
+          <th scope="col">Title</th>
+          <th scope="col">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < viewData.events.length; i++) { %>
+        <tr>
+          <td scope="row"><%= i + 1 %></td>
+          <td><%= viewData.events[i].name %></td>
+          <td><%= viewData.events[i].created_at %></td>
+          <td><%= viewData.events[i].target_title %></td>
+          <td><%= viewData.events[i].target_type %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

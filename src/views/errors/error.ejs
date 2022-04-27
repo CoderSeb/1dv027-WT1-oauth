@@ -1,0 +1,27 @@
+<style>
+  .errTitle {
+    font-size: 3.5em;
+  }
+  .errMessage {
+    font-size: 1.5em;
+  }
+
+  .errDiv {
+    margin: 10% auto;
+    width: 320px;
+    height: fit-content;
+    border-radius: 10px;
+    padding: 1em;
+    background: rgba(255, 176, 145, 0.719);
+    color: black;
+  }
+
+  .errDiv img {
+    width: 70%;
+  }
+</style>
+<div class="errDiv">
+  <img src="/images/error.png" alt="Error Image">
+  <h1 class="errTitle"><%= viewData.err.status %></h1>
+  <p class="errMessage"><%= viewData.err.message %></p>
+</div>

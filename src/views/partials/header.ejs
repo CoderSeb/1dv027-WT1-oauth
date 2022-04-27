@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark oauth-header">
+  <a class="navbar-brand" href="/">Sebs OAuth Mayhem</a>
+  <ul class="navbar-nav mr-auto">
+    <% if (!viewData.user) { %>
+    <li class="nav-item">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+    <% } %> <% if (viewData.user) { %>
+    <li class="nav-item">
+      <a class="nav-link" href="/user/profile">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="activity-link" href="/user/activities">Activities</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/user/logout">Logout</a>
+    </li>
+    <% } %>
+  </ul>
+</nav>

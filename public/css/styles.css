@@ -1,0 +1,107 @@
+html, body {
+  height:100%;
+  background-color: #081b3fde;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: #081b3fde;
+}
+
+main {
+  flex: 1 auto;
+  background-color: #081b3fde;
+  min-height: 100% - 70px;
+  padding: 2rem;
+  color: #cdd6ff;
+  text-align: center;
+}
+
+footer {
+  flex-shrink: 0;
+  height: 70px;
+  background-color: #081b3fde;
+  text-align: center;
+  color: #cdd6ff;
+  line-height: 50px;
+}
+
+.oauth-header {
+  padding: .5em;
+}
+
+.oauth-link {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.oauth-link:hover {
+  text-decoration: none;
+}
+
+.oauth-link:active {
+  font-size: 1.3em;
+}
+
+.oauth-card {
+  max-width: 300px;
+  border-radius: 6px;
+  margin: 1em auto;
+  text-align: left;
+  padding: 1em;
+}
+
+.oauth-card > img {
+  max-width: 220px;
+  margin: 1em auto;
+}
+
+.name-tag {
+  float:right;
+  color: #cdd6ff;
+  padding: .5em;
+}
+
+#loader {
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid #444444;
+  width: 70px;
+  height: 70px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.center-loader {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.table-responsive {
+  overflow:auto;
+  height: 80vh;
+}
+
+.table-responsive, thead, th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
